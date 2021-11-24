@@ -34,13 +34,13 @@ import { mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["fooddata"])
+    ...mapState(["fooddata"]),
   },
   methods: {
     priceFormatting(item) {
       return "$" + item.toFixed(2);
-    }
-  }
+    },
+  },
 };
 </script>
 
