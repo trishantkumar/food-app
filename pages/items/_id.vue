@@ -49,6 +49,9 @@
         </div>
       </fieldset>
       <AppToast v-if="isAddToCart">Add to Cart Successfully!</AppToast>
+      <AppToast v-if="isError"
+        >Please add something in Options or Addons!</AppToast
+      >
     </section>
 
     <section class="options">
@@ -74,19 +77,25 @@ export default {
       itemAddons: [],
       itemSizeAndCost: [],
       isAddToCart: false,
+      isError: false,
     };
   },
   methods: {
     addToCart() {
-      let formOutput = {
-        item: this.currentItem.item,
-        count: this.count,
-        options: this.itemOptions,
-        addOns: this.itemAddons,
-        combinedPrice: this.combinedPrice,
-      };
-      this.isAddToCart = true;
-      this.$store.commit("addToCart", formOutput);
+      this.isError = false;
+      if (this.itemOptions.length || this.itemAddons.length) {
+        let formOutput = {
+          item: this.currentItem.item,
+          count: this.count,
+          options: this.itemOptions,
+          addOns: this.itemAddons,
+          combinedPrice: this.combinedPrice,
+        };
+        this.isAddToCart = true;
+        this.$store.commit("addToCart", formOutput);
+      } else {
+        this.isError = true;
+      }
     },
   },
   computed: {
